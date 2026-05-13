@@ -1,112 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Cricket Session Accounting</title>
-  <style>
-    :root{--bg:#08111f;--card:#111c2f;--card2:#0e1728;--text:#eef4ff;--muted:#91a4bf;--green:#18c37e;--red:#ff5b6e;--yellow:#f5c451;--line:#223049;--blue:#5da8ff}
-    *{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(180deg,#08111f,#0b1322 45%,#07101c);color:var(--text)}
-    header{position:sticky;top:0;z-index:5;background:rgba(8,17,31,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:14px 14px 10px}
-    h1{font-size:19px;margin:0 0 4px}.sub{font-size:12px;color:var(--muted)}
-    main{padding:12px;max-width:900px;margin:auto}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:0 8px 25px rgba(0,0,0,.18)}
-    .stat{font-size:12px;color:var(--muted)}.num{font-size:22px;font-weight:800;margin-top:4px}.green{color:var(--green)}.red{color:var(--red)}.yellow{color:var(--yellow)}
-    label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px} input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid #2b3c5b;background:#0a1425;color:var(--text);font-size:15px} textarea{min-height:72px;resize:vertical}
-    button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;color:#06101f;background:var(--green);font-size:15px}button.secondary{background:#26354f;color:var(--text)}button.danger{background:var(--red);color:white}button.blue{background:var(--blue);color:#06101f}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button{flex:1;min-width:120px}
-    table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 7px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--muted);font-weight:700}.scroll{overflow-x:auto}.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#1c2a42;font-size:12px}.right{text-align:right}.tabs{display:flex;gap:8px;margin:12px 0}.tabs button{background:#17243b;color:var(--text);padding:10px}.tabs button.active{background:var(--green);color:#06101f}.hidden{display:none}.small{font-size:12px;color:var(--muted);line-height:1.45}.entry-card{display:none}.toolbar{display:flex;gap:8px;margin:12px 0}.toolbar input{flex:1}
-    @media(max-width:700px){.grid,.row{grid-template-columns:1fr}.desktop-table{display:none}.entry-card{display:block;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0}.entry-card b{font-size:15px}.entry-meta{color:var(--muted);font-size:12px;margin:4px 0}.entry-amt{font-size:18px;font-weight:800}.num{font-size:20px}}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<title>Cricket Hisab - Mobile Ledger</title>
+<style>
+:root{--bg:#07111f;--card:#0f1b2e;--card2:#12233d;--txt:#eef6ff;--mut:#93a4b8;--line:#233752;--g:#17c964;--r:#ff4d4f;--y:#f5a524;--b:#3b82f6}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#07111f,#0b1424);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}.wrap{max-width:520px;margin:0 auto;min-height:100vh;padding-bottom:88px}.top{position:sticky;top:0;z-index:5;background:rgba(7,17,31,.92);backdrop-filter:blur(14px);padding:14px 14px 10px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand h1{font-size:19px;margin:0}.pill{font-size:12px;color:#b8c9dc;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:#0a182a}.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:12px}.tab{border:1px solid var(--line);background:#0a182a;color:#bed0e5;border-radius:12px;padding:10px 5px;font-size:12px}.tab.active{background:#18345d;border-color:#4388ff;color:white}.section{display:none;padding:14px}.section.active{display:block}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card{background:linear-gradient(180deg,var(--card),#0d192a);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 8px 22px rgba(0,0,0,.18)}.stat .label{font-size:12px;color:var(--mut)}.stat .value{font-size:22px;font-weight:800;margin-top:4px}.green{color:var(--g)}.red{color:var(--r)}.yellow{color:var(--y)}label{font-size:12px;color:#b9cadc;display:block;margin:10px 0 5px}input,select,textarea{width:100%;background:#09182a;border:1px solid #2b4260;color:white;border-radius:12px;padding:12px;font-size:16px;outline:none}textarea{min-height:74px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{width:100%;border:0;border-radius:14px;padding:13px 12px;font-weight:800;font-size:15px;color:white;background:var(--b);margin-top:10px}.btn2{background:#182b47;border:1px solid #2e4667}.danger{background:#a52626}.ok{background:#149456}.mini{font-size:12px;padding:8px 10px;border-radius:10px;margin:0;width:auto}.list{display:flex;flex-direction:column;gap:10px}.item{background:#0b1829;border:1px solid var(--line);border-radius:16px;padding:12px}.itemTop{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.title{font-weight:800}.sub{color:var(--mut);font-size:12px;margin-top:4px;line-height:1.35}.amt{font-weight:900;font-size:18px;text-align:right}.actions{display:flex;gap:8px;margin-top:10px}.actions button{flex:1}.bottom{position:fixed;left:0;right:0;bottom:0;background:rgba(7,17,31,.95);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:10px}.bottom .inner{max-width:520px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}.search{margin-bottom:12px}.empty{color:var(--mut);text-align:center;padding:25px 10px}.small{font-size:12px;color:var(--mut);line-height:1.45}.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#10243d;color:#bcd0e6;font-size:11px;margin-right:5px}.hidden{display:none!important}@media(max-width:360px){.tabs{gap:5px}.tab{font-size:11px;padding:9px 2px}.section{padding:10px}.row{grid-template-columns:1fr}}
+</style>
 </head>
-<body>
-<header>
-  <h1>Cricket Session Accounting</h1>
-  <div class="sub">Private ledger for match/session accounting. Data saves on this device only.</div>
-</header>
-<main>
-  <div class="grid">
-    <div class="card"><div class="stat">Total Profit</div><div id="profit" class="num green">₹0</div></div>
-    <div class="card"><div class="stat">Total Loss</div><div id="loss" class="num red">₹0</div></div>
-    <div class="card"><div class="stat">Net Balance</div><div id="net" class="num">₹0</div></div>
-    <div class="card"><div class="stat">Pending Settlement</div><div id="pending" class="num yellow">₹0</div></div>
-  </div>
-
-  <div class="tabs">
-    <button id="tabAdd" class="active" onclick="showTab('add')">Add Entry</button>
-    <button id="tabList" onclick="showTab('list')">Ledger</button>
-    <button id="tabHelp" onclick="showTab('help')">Help</button>
-  </div>
-
-  <section id="add" class="card">
-    <div class="row">
-      <div><label>Date</label><input id="date" type="date"></div>
-      <div><label>Match</label><input id="match" placeholder="RCB vs KKR"></div>
-    </div>
-    <div class="row">
-      <div><label>Party / Name</label><input id="party" placeholder="Party name"></div>
-      <div><label>Type</label><select id="type"><option>Session</option><option>Match</option><option>Fancy</option><option>Settlement</option><option>Other</option></select></div>
-    </div>
-    <div class="row">
-      <div><label>Side</label><select id="side"><option>Khai</option><option>Lagai</option><option>Receive</option><option>Pay</option></select></div>
-      <div><label>Session / Note</label><input id="session" placeholder="6 over, 10 over, wickets etc"></div>
-    </div>
-    <div class="row">
-      <div><label>Rate / Odds</label><input id="rate" type="number" step="0.01" placeholder="Optional"></div>
-      <div><label>Amount ₹</label><input id="amount" type="number" inputmode="decimal" placeholder="1000"></div>
-    </div>
-    <div class="row">
-      <div><label>Result</label><select id="result"><option>Pending</option><option>Win</option><option>Loss</option><option>Settled</option></select></div>
-      <div><label>Settled?</label><select id="settled"><option>No</option><option>Yes</option></select></div>
-    </div>
-    <label>Remarks</label><textarea id="remarks" placeholder="Any detail"></textarea>
-    <div class="actions"><button onclick="saveEntry()">Save Entry</button><button class="secondary" onclick="clearForm()">Clear</button></div>
-  </section>
-
-  <section id="list" class="hidden">
-    <div class="toolbar"><input id="search" placeholder="Search match / party / session" oninput="render()"><button class="blue" onclick="exportCSV()">Export</button></div>
-    <div class="card scroll desktop-table"><table><thead><tr><th>Date</th><th>Match</th><th>Party</th><th>Type</th><th>Side</th><th>Session</th><th>Rate</th><th class="right">Amount</th><th>Result</th><th>Settled</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
-    <div id="mobileList"></div>
-    <div class="actions"><button class="danger" onclick="resetAll()">Delete All Data</button></div>
-  </section>
-
-  <section id="help" class="card hidden">
-    <h3>Use kaise karna hai</h3>
-    <p class="small">1. Entry add karo: match, party, type, side, amount, result.<br>2. Win = profit me count hoga. Loss = loss me count hoga. Pending = pending settlement me count hoga agar settled No hai.<br>3. Settlement ke liye type “Settlement” choose karke Receive/Pay side use kar sakte ho.<br>4. Data sirf phone/browser me save hota hai. Browser clear karoge to data delete ho sakta hai. Export CSV backup ke liye use karo.</p>
-    <p class="small">Note: Ye tool sirf private accounting/record keeping ke liye hai; legal rules apne area ke hisaab se follow karo.</p>
-  </section>
-</main>
+<body><div class="wrap">
+<header class="top"><div class="brand"><h1>🏏 Cricket Hisab</h1><span class="pill" id="todayBal">₹0</span></div><div class="tabs"><button class="tab active" data-tab="dash">Home</button><button class="tab" data-tab="entry">Entry</button><button class="tab" data-tab="party">Party</button><button class="tab" data-tab="settle">Settle</button><button class="tab" data-tab="backup">Backup</button></div></header>
+<section id="dash" class="section active"><div class="grid"><div class="card stat"><div class="label">Total Profit</div><div class="value green" id="profit">₹0</div></div><div class="card stat"><div class="label">Total Loss</div><div class="value red" id="loss">₹0</div></div><div class="card stat"><div class="label">Net Balance</div><div class="value" id="net">₹0</div></div><div class="card stat"><div class="label">Entries</div><div class="value" id="count">0</div></div></div><input class="search" id="q" placeholder="Search party / match / note" oninput="render()"><div class="card"><div class="itemTop"><div><div class="title">Recent Entries</div><div class="sub">Match, session aur settlement sab yahan dikhega.</div></div><button class="btn mini btn2" onclick="clearFilters()">Clear</button></div></div><div id="recent" class="list"></div></section>
+<section id="entry" class="section"><div class="card"><div class="title">New Match / Session Entry</div><label>Type</label><select id="type"><option>Session</option><option>Match</option><option>Fancy</option><option>Other</option></select><label>Party Name</label><input id="partyName" placeholder="e.g. Ramesh"><label>Match</label><input id="matchName" placeholder="e.g. RCB vs KKR"><div class="row"><div><label>Side</label><select id="side"><option>Khai</option><option>Lagai</option><option>Plus</option><option>Minus</option></select></div><div><label>Rate</label><input id="rate" type="number" step="0.01" placeholder="e.g. 80"></div></div><div class="row"><div><label>Amount</label><input id="amount" type="number" placeholder="e.g. 10000"></div><div><label>Result</label><select id="result"><option value="open">Open</option><option value="win">Win / Lena</option><option value="loss">Loss / Dena</option></select></div></div><label>Note</label><textarea id="note" placeholder="e.g. 6 over session, 52 yes/no"></textarea><button class="btn ok" onclick="addEntry()">Save Entry</button><div class="small">Calculation: Win = +amount × rate/100. Loss = -amount. Result baad me edit bhi kar sakte ho.</div></div></section>
+<section id="party" class="section"><div class="card"><div class="title">Party Ledger</div><div class="sub">Har party ka net balance: green lena, red dena.</div></div><div id="partyList" class="list"></div></section>
+<section id="settle" class="section"><div class="card"><div class="title">Settlement / Cash Entry</div><label>Party Name</label><input id="setParty" placeholder="Party"><label>Mode</label><select id="setMode"><option value="received">Received / Mila</option><option value="paid">Paid / Diya</option></select><label>Amount</label><input id="setAmount" type="number" placeholder="e.g. 5000"><label>Note</label><input id="setNote" placeholder="cash / UPI / old balance"><button class="btn" onclick="addSettlement()">Add Settlement</button></div></section>
+<section id="backup" class="section"><div class="card"><div class="title">Backup & Restore</div><button class="btn ok" onclick="exportData()">Export Backup JSON</button><label>Restore JSON</label><textarea id="restoreBox" placeholder="Paste backup JSON here"></textarea><button class="btn" onclick="restoreData()">Restore</button><button class="btn danger" onclick="resetAll()">Delete All Data</button><p class="small">Data phone browser ke Local Storage me save hota hai. Phone change/browser clear karoge to backup zaroor rakhna.</p></div></section>
+</div><div class="bottom"><div class="inner"><button class="btn btn2" onclick="showTab('entry')">+ New Entry</button><button class="btn btn2" onclick="showTab('settle')">₹ Settle</button></div></div>
 <script>
-let entries = JSON.parse(localStorage.getItem('cricketLedgerV1') || '[]');
-let editId = null;
-const ids = ['date','match','party','type','side','session','rate','amount','result','settled','remarks'];
-document.getElementById('date').valueAsDate = new Date();
-function money(n){return '₹' + (Number(n)||0).toLocaleString('en-IN',{maximumFractionDigits:2})}
-function showTab(t){['add','list','help'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==t));['tabAdd','tabList','tabHelp'].forEach(x=>document.getElementById(x).classList.remove('active'));document.getElementById('tab'+t[0].toUpperCase()+t.slice(1)).classList.add('active');render()}
-function saveEntry(){
-  const e={}; ids.forEach(id=>e[id]=document.getElementById(id).value.trim());
-  if(!e.date||!e.match||!e.party||!e.amount){alert('Date, Match, Party aur Amount mandatory hai');return}
-  e.amount=Number(e.amount)||0; e.rate=Number(e.rate)||0;
-  if(editId){entries=entries.map(x=>x.id===editId?{...e,id:editId}:x); editId=null}else{e.id=Date.now().toString(); entries.unshift(e)}
-  localStorage.setItem('cricketLedgerV1',JSON.stringify(entries)); clearForm(); render(); showTab('list');
-}
-function clearForm(){ids.forEach(id=>{const el=document.getElementById(id); if(el.tagName==='SELECT') el.selectedIndex=0; else el.value=''});document.getElementById('date').valueAsDate=new Date();editId=null}
-function calcSigned(e){ if(e.result==='Win'||e.side==='Receive') return e.amount; if(e.result==='Loss'||e.side==='Pay') return -e.amount; return 0 }
-function render(){
-  const q=(document.getElementById('search')?.value||'').toLowerCase();
-  const filtered=entries.filter(e=>Object.values(e).join(' ').toLowerCase().includes(q));
-  let profit=0,loss=0,pending=0,net=0;
-  entries.forEach(e=>{const s=calcSigned(e); net+=s; if(s>0)profit+=s; if(s<0)loss+=Math.abs(s); if(e.settled==='No' && e.result==='Pending') pending+=e.amount;});
-  document.getElementById('profit').textContent=money(profit);document.getElementById('loss').textContent=money(loss);document.getElementById('net').textContent=money(net);document.getElementById('net').className='num '+(net>=0?'green':'red');document.getElementById('pending').textContent=money(pending);
-  document.getElementById('tbody').innerHTML=filtered.map(e=>`<tr><td>${e.date}</td><td>${e.match}</td><td>${e.party}</td><td>${e.type}</td><td>${e.side}</td><td>${e.session||''}</td><td>${e.rate||''}</td><td class="right ${calcSigned(e)>=0?'green':'red'}">${money(calcSigned(e)||e.amount)}</td><td><span class="pill">${e.result}</span></td><td>${e.settled}</td><td><button class="secondary" onclick="editEntry('${e.id}')">Edit</button><br><br><button class="danger" onclick="delEntry('${e.id}')">Del</button></td></tr>`).join('');
-  document.getElementById('mobileList').innerHTML=filtered.map(e=>`<div class="entry-card"><b>${e.match}</b><div class="entry-meta">${e.date} • ${e.party} • ${e.type} • ${e.side}</div><div>${e.session||''}</div><div class="entry-amt ${calcSigned(e)>=0?'green':'red'}">${money(calcSigned(e)||e.amount)}</div><div class="entry-meta">Rate: ${e.rate||'-'} • Result: ${e.result} • Settled: ${e.settled}</div><div class="actions"><button class="secondary" onclick="editEntry('${e.id}')">Edit</button><button class="danger" onclick="delEntry('${e.id}')">Delete</button></div></div>`).join('') || '<div class="card small">No entries yet.</div>';
-}
-function editEntry(id){const e=entries.find(x=>x.id===id); if(!e)return; ids.forEach(k=>document.getElementById(k).value=e[k]??''); editId=id; showTab('add')}
-function delEntry(id){if(confirm('Delete this entry?')){entries=entries.filter(e=>e.id!==id);localStorage.setItem('cricketLedgerV1',JSON.stringify(entries));render()}}
-function resetAll(){if(confirm('All data delete ho jayega. Sure?')){entries=[];localStorage.removeItem('cricketLedgerV1');render()}}
-function exportCSV(){
-  const header=ids.join(','); const rows=entries.map(e=>ids.map(k=>'"'+String(e[k]??'').replaceAll('"','""')+'"').join(','));
-  const blob=new Blob([[header,...rows].join('\n')],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='cricket-ledger-backup.csv'; a.click();
-}
-render();
-</script>
-</body>
-</html>
+const KEY='cricket_hisab_v3'; let data=load();
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function money(n){n=Number(n)||0;return '₹'+Math.abs(n).toLocaleString('en-IN',{maximumFractionDigits:2})}
+function signed(n){n=Number(n)||0;return (n<0?'- ':'+ ')+money(n)}
+function calc(e){ if(e.kind==='settlement') return e.mode==='received'?-(+e.amount||0):(+e.amount||0); if(e.result==='open') return 0; let amt=+e.amount||0, rate=+e.rate||100; return e.result==='win'? amt*rate/100 : -amt; }
+function showTab(id){document.querySelectorAll('.section,.tab').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelector(`.tab[data-tab="${id}"]`)?.classList.add('active');window.scrollTo(0,0);render()}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+function addEntry(){let e={id:Date.now(),kind:'entry',date:new Date().toLocaleString(),type:val('type'),party:val('partyName').trim(),match:val('matchName').trim(),side:val('side'),rate:val('rate'),amount:val('amount'),result:val('result'),note:val('note')}; if(!e.party||!e.amount){alert('Party aur Amount bharna zaroori hai');return} data.unshift(e); ['partyName','matchName','rate','amount','note'].forEach(id=>document.getElementById(id).value=''); save(); showTab('dash')}
+function addSettlement(){let e={id:Date.now(),kind:'settlement',date:new Date().toLocaleString(),party:val('setParty').trim(),mode:val('setMode'),amount:val('setAmount'),note:val('setNote')}; if(!e.party||!e.amount){alert('Party aur Amount bharna zaroori hai');return} data.unshift(e); ['setParty','setAmount','setNote'].forEach(id=>document.getElementById(id).value=''); save(); showTab('dash')}
+function val(id){return document.getElementById(id).value}
+function del(id){if(confirm('Delete this entry?')){data=data.filter(x=>x.id!==id);save()}}
+function toggle(id,res){let e=data.find(x=>x.id===id); if(e){e.result=res;save()}}
+function render(){let q=(document.getElementById('q')?.value||'').toLowerCase(); let rows=data.filter(e=>JSON.stringify(e).toLowerCase().includes(q)); let vals=data.map(calc), p=vals.filter(x=>x>0).reduce((a,b)=>a+b,0), l=vals.filter(x=>x<0).reduce((a,b)=>a+b,0), net=p+l; set('profit',money(p)); set('loss',money(l)); set('net',(net<0?'- ':'')+money(net)); byId('net').className='value '+(net>=0?'green':'red'); set('count',data.length); set('todayBal',(net<0?'- ':'')+money(net)); recent(rows); parties();}
+function set(id,txt){let el=byId(id); if(el)el.textContent=txt} function byId(id){return document.getElementById(id)}
+function recent(rows){let el=byId('recent'); if(!el)return; if(!rows.length){el.innerHTML='<div class="empty">No entries yet</div>';return} el.innerHTML=rows.slice(0,80).map(e=>{let c=calc(e), cls=c>=0?'green':'red'; return `<div class="item"><div class="itemTop"><div><div class="title">${esc(e.party)} ${e.kind==='settlement'?'<span class="badge">Settlement</span>':'<span class="badge">'+esc(e.type)+'</span>'}</div><div class="sub">${esc(e.date)} • ${esc(e.match||'')} ${e.side?'• '+esc(e.side):''} ${e.rate?'• Rate '+esc(e.rate):''}<br>${esc(e.note||'')}</div></div><div class="amt ${cls}">${signed(c)}</div></div>${e.kind==='entry'?`<div class="actions"><button class="btn mini ok" onclick="toggle(${e.id},'win')">Win</button><button class="btn mini danger" onclick="toggle(${e.id},'loss')">Loss</button><button class="btn mini btn2" onclick="toggle(${e.id},'open')">Open</button></div>`:''}<div class="actions"><button class="btn mini danger" onclick="del(${e.id})">Delete</button></div></div>`}).join('')}
+function parties(){let map={}; data.forEach(e=>{map[e.party]=(map[e.party]||0)+calc(e)}); let arr=Object.entries(map).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])); let el=byId('partyList'); if(!el)return; if(!arr.length){el.innerHTML='<div class="empty">No parties yet</div>';return} el.innerHTML=arr.map(([name,bal])=>`<div class="item"><div class="itemTop"><div><div class="title">${esc(name)}</div><div class="sub">${bal>=0?'Lena hai':'Dena hai'}</div></div><div class="amt ${bal>=0?'green':'red'}">${bal<0?'- ':''}${money(bal)}</div></div><button class="btn mini btn2" onclick="filterParty('${escAttr(name)}')">View Entries</button></div>`).join('')}
+function filterParty(n){showTab('dash'); byId('q').value=n; render()}
+function clearFilters(){byId('q').value='';render()}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cricket-hisab-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click()}
+function restoreData(){try{let x=JSON.parse(byId('restoreBox').value); if(!Array.isArray(x))throw 0; data=x; save(); alert('Restored')}catch(e){alert('Invalid JSON')}}
+function resetAll(){if(confirm('All data delete karna hai?')){data=[];save()}}
+function esc(s){return String(s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function escAttr(s){return esc(s).replace(/'/g,'&#39;')} render();
+</script></body></html>
